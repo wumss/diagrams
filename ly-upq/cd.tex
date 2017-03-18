@@ -1,0 +1,44 @@
+\documentclass{article}
+
+\usepackage{tikz}
+\usetikzlibrary{cd}
+
+\title{Commutative Diagrams for Lirong's Talk}
+\author{Lirong Yang\\Typeset by Fengyang Wang}
+
+\begin{document}
+
+\maketitle
+
+\[
+\begin{tikzcd}
+  A \arrow[rd, "\forall" below left] \arrow[r, "q"] & A/E \arrow[d, "\exists!", dashed] \\
+  & x
+\end{tikzcd}
+\]
+
+\[
+\begin{tikzcd}
+  A \arrow[rd, "\forall" below left] \arrow[r, "q"] & \overline{A} \arrow[d, "\exists!", dashed] \\
+  & X
+\end{tikzcd}
+\]
+
+\[
+\begin{tikzcd}
+  M\times N \arrow[r] \arrow[rd, "\forall" below left ] &
+  M \otimes_R N \arrow[d, "\exists!", dashed]\\
+  & L
+\end{tikzcd}
+\]
+
+\[
+\begin{tikzcd}
+  M\times N \arrow[r] \arrow[rd, "\forall" below left] &
+  R^{M\times N} \arrow[r] \arrow[d] &
+  R^{M\times N}/K = M \otimes_R N \arrow[ld, "\exists!", dashed] \\
+  & L &
+\end{tikzcd}
+\]
+
+\end{document}
