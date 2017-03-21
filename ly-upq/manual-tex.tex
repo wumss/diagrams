@@ -1,0 +1,222 @@
+\documentclass{memoir}
+\usepackage{fontspec, newunicodechar, polyglossia}
+
+\setsansfont{Lato}[Scale=MatchLowercase, Ligatures=TeX]
+% \setmonofont{Fantasque Sans Mono}[Scale=MatchLowercase]
+\renewcommand{\familydefault}{\sfdefault}
+%
+
+% colours
+\usepackage{xcolor}
+
+\definecolor{light-blue}{HTML}{6b85dd}
+\definecolor{dark-blue}{HTML}{4266d5}
+\definecolor{light-red}{HTML}{d66661}
+\definecolor{dark-red}{HTML}{c93d39}
+\definecolor{light-green}{HTML}{6bab5b}
+\definecolor{dark-green}{HTML}{3b972e}
+\definecolor{light-purple}{HTML}{aa7dc0}
+\definecolor{dark-purple}{HTML}{945bb0}
+%
+
+% maths
+\usepackage{amsmath, amssymb}
+%
+
+% listings
+\usepackage{listings, minted}
+
+\lstset{
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+    columns = fullflexible,
+    frame = leftline,
+    keepspaces = true,
+    showstringspaces = false,
+    xleftmargin = 3pt,
+}
+
+\setminted{
+    breaklines = true,
+    fontsize = \small,
+    frame = leftline,
+}
+%
+
+% tables
+\usepackage{tabulary}
+%
+
+% hyperref
+\usepackage{hyperref}
+\hypersetup{
+    pdfpagelabels,
+    bookmarks,
+    hyperindex,
+    unicode = true,
+    linkcolor = dark-blue,
+    urlcolor = dark-purple,
+    colorlinks = true,
+}
+%
+
+% table of contents
+\maxtocdepth{subsection}
+%
+
+% paragraphs
+\setlength{\parindent}{0pt}
+\nonzeroparskip
+%
+
+% adjust margins
+\setulmarginsandblock{1.5in}{1in}{*}
+\setlrmarginsandblock{1.5in}{1in}{*}
+\setheaderspaces{1in}{*}{*}
+\checkandfixthelayout
+%
+\begin{document}
+
+When I was doing abstract algebra, I was amazed by the similarities of the Universal Property of Quotients in various algebraic structures. Let us start with reviewing the universal property of quotients in groups, rings, \(R\)-modules, sets, and topological spaces.
+
+\chapter{UPQ in Grp/Ring/R-Mod/Set/Top}
+
+Let \(A\) be a group/ring/R-module/set/topological space. Let \(E \subseteq A\) be a normal subgroup/ideal/submodule or in the case of sets or topological spaces \(E \subseteq A^2\) equivalence relation. We have the following diagram:
+
+\begin{figure}
+\centering
+\includegraphics{images/upq-groups.png}
+\caption{Commutative diagram for quotients of groups/rings/R-modules/sets/topological spaces}
+\end{figure}
+
+
+i.e. for all homomorphisms \(f : A \to X\),  there is a unique homomorphism \(A/E \to X\) such that \(\overline{f} \circ q = f\) if and only if \(E \subseteq \operatorname{ker}(f)\) or in the case of sets and topological spaces we have that \(x E y \implies f(x) = f(y)\) for all \(x,y \in A\).
+
+\textbf{Example}. Note that \(\mathbf{Z}\) is an additive group/ring/\(\mathbf{Z}\)-module and \(2\mathbf{Z}\) is a normal subgroup/ideal/\(\mathbf{Z}\)-submodule. We have a quotient homomorphism \(q : \mathbf{Z} \to \mathbf{Z}/2\mathbf{Z}\) given by \(n \to n + 2\mathbf{Z}\).
+
+\textbf{Example}. We have a (continuous) quotient map \([0,1] \to S^{1} \cong [0,1]/\sim\) where \(x \sim y\) if and only if \(x = y\) or \(\{x,y\} \subseteq \{0,1\}\).
+
+\chapter{Introduction to Categories}
+
+Here is a sketch of a definition of a category.
+
+\textbf{Definition}. A \textbf{category} is the following data:
+
+\begin{itemize}
+\item[1. ] objects, denoted \(\operatorname{ob}(C)\) (note this need not be a set)
+
+
+\item[2. ] homomorphisms for every \(A,B \in \operatorname{ob}(\mathcal{C})\), which we denote by \(f : A \to B\). We denote the collection of homomorphisms from \(A\) to \(B\) by \(\operatorname{Hom}_{\mathcal{C}}(A,B)\).
+
+
+\item[3. ] An associative way to compose: for all \(f : A \to B\), \(g : B \to C\), \(h : C \to D\), \((h \circ g) \circ f = h \circ (g \circ f)\).
+
+\end{itemize}
+satisfying axioms of a category.
+
+\textbf{Examples}. Set, Grp, Ring, R-Mod, Topological spaces. All of these are examples are concrete categories.
+
+\chapter{UPQ in Categories}
+
+Intuitively, quotients are used to identify elements of an object in a concrete category to get the {\textquotedbl}closest{\textquotedbl} object that is in the same category.
+
+\textbf{Definition}. Let \(\mathcal{C}\) be a concrete category (there is a forgetful functor from \(\mathcal{C}\) to \(\mathrm{Set}\)).  Let \(A \in \operatorname{ob}(\mathcal{C})\). We can talk about \(P \subseteq \mathcal{P}(A)\), a set of nonempty disjoint subsets of \(A\). A \textbf{quotient} of \(A\) by \(P\) in \(\mathcal{C}\) is a \emph{universal object} in the category of \(\mathcal{D} \leq \mathcal{C}^{A}\) where
+
+\begin{equation*}
+\begin{split}\operatorname{ob}(\mathcal{D}) = \{ f : A \to X \in \operatorname{ob}(\mathcal{C}^A) : \\
+\text{ for all } S \in P, f(a) = f(b) \text{ for all } a,b \in S \subseteq A\}.\end{split}\end{equation*}
+In other words, \(q : A \to \overline{A}\) is a quotient if and only if
+
+\begin{itemize}
+\item[1. ] \(q : A \to \overline{A} \in \operatorname{Hom}_{\mathcal{C}}(A,\overline{A})\) and for all \(S \in P, q(a) = q(b)\) for all \(a,b \in S \subseteq A\)
+\item[2. ] for all \(f : A \to X\) satisfying (1), there is a unique \(\overline{A} \to C\) in \(\mathcal{C}\) such that the diagram commutes:
+
+\end{itemize}
+\begin{figure}
+\centering
+\includegraphics{images/upq-definition.png}
+\caption{Commutative diagram defining quotients}
+\end{figure}
+
+
+\textbf{Remark}. Since a quotient is a universal object which is unique up to unique isomorphism, we can say \textbf{the} quotient of \(A\) by \(P\).
+
+\textbf{Proposition}. (UPQ) Let \(q : A \to \overline{A}\) be the quotient of \(A\) by \(P\) in \(\mathcal{C}\), a concrete category. Let \(f : A \to X\) be in \(\mathrm{Set}\). Then there exists a unique \(\overline{f} : \overline{A} \to X\) such that the following diagram commutes if and only if \(f\) satisfies condition (1) above.
+
+\begin{figure}
+\centering
+\includegraphics{images/upq-concrete.png}
+\caption{Commutative diagram related to above proposition}
+\end{figure}
+
+
+\textbf{Proof}. The backward direction is clear by condition (2). Let us check the forward direction. Since \(\overline{f}, q\) are in \(\mathcal{C}\), \(f = \overline{f} \circ q\) is in \(\mathcal{C}\). Also for all \(S \in P\) we have for all \(a,b \in S\), \(f(a) = \overline{f} \circ q(a) = \overline{f} \circ q(b) = f(b)\)
+
+\chapter{Existence of Quotients in Set and Grp}
+
+\textbf{Useful exercise}. There is a one-to-one correspondence of equivalence relations on \(X\) and the collection of partitions on \(X\) (where \(X\) is a set), given by \(E \to P_{E}\), the equivalence classes of \(E\).
+
+\textbf{Proposition}. The quotients exist in \(\mathrm{Set}\) and \(\mathrm{Grp}\).
+
+\textbf{Sketch of proof.} Let \(A \in \operatorname{ob}(\mathcal{C})\). Let \(P \subseteq \mathcal{P}(A)\) be disjoint.
+
+In the category \(\mathrm{Set}\) we let
+
+\begin{equation*}
+\begin{split}\overline{A} = P \cup \{\{x\} : x \in A \setminus \cup P\}\end{split}\end{equation*}
+which is a partition on \(A\). The quotient map \(q : A \to \overline{A}\) is given by \(y = q(x)\) if and only if \(x \in y\).
+
+In \(\mathrm{Grp}\) we let \(\overline{A} : A/N\) where \(N = \langle{axa^{-1} : a \in A, x \in S\}\rangle\) is the normal closure of \(S\), where
+
+\begin{equation*}
+\begin{split}S_C = \{xy^{-1} : x,y \in C\}\end{split}\end{equation*}
+for \(C \in P\), \(S = \bigcup_{C \in P} S_C\). Let \(q : A \to A/N\) be the quotient map.
+
+\textbf{Remark}. If \(N \trianglelefteq A\) a normal subgroup of a group,  then \(q : A \to A/N\) is the quotient of \(A\) by \({N}\) in \(\mathrm{Grp}\).
+
+\textbf{Exercise}. Check the existence in \(\mathrm{Ring}\), \(\mathrm{R-Mod}\) and \(\mathrm{Top}\).
+
+\chapter{Non-Existence of Quotients in Field}
+
+Let us show that there is no nontrivial quotients in the category of fields.
+
+\textbf{Proposition}. Nontrivial quotients do not exist in \(\mathrm{Field}\). That is, for all field \(A\), there is no quotient of \(A\) by \(P\) in \(\mathrm{Field}\) where \(P \ne \varnothing\) and not a set of singletons in \(A\).
+
+\textbf{Proof}. Assume toward a contradiction that there is the quotient\(q : A \to \overline{A}\). Since \(A\) is a field, we have \(q\) is one to one. But exists \(\mathrm{C} \in P\) and \(a \ne b\) in \(C\) such that \(q(a) = q(b)\) and this is our contradiction.
+
+\chapter{Application and Further}
+
+\textbf{Definition}. Let \(M,N\) be \(R\)-modules where \(R\) is a commutative ring. A \textbf{tensor product} of \(M, N\) over \(R\) is an R-bilinear map \(\otimes: M \times N \to M \otimes_R N\) such that for all \(R\)-bilinear maps \(M \times N \to L\), there exists a unique \(M \otimes_R N \to L\) \(R\)-module homomorphism such that the following diagram commutes.
+
+\begin{figure}
+\centering
+\includegraphics{images/tensor-product-up.png}
+\caption{Commutative diagram defining tensor products}
+\end{figure}
+
+
+A construction of tensor products is given by the following commutative diagram:
+
+\begin{figure}
+\centering
+    \includegraphics[width=\textwidth]{images/tensor-product-construction.png}
+\caption{Commutative diagram depicting a particular construction of tensor products}
+\end{figure}
+
+
+where the submodule
+
+\begin{equation*}
+\begin{split}K = \langle (x_1, \lambda{}y_1 + y_2) - \lambda{}(x_1, y_1) - (x_1, y_2), \\
+      (\lambda{}x_1 + x_2, y_1) - \lambda{}(x_1, y_1) - (x_2, y_1) : \\
+      x_1 \in M, x_2 \in M, y_1 \in N, y_2 \in N, \lambda{} \in R \rangle\end{split}\end{equation*}
+\textbf{Fact}. Let \(\mathcal{C}\) be the category of an algebraic structure. Let \(q : A \to \overline{A}\) the quotient of \(A\) by \(P\) in \(\mathcal{C}\). Then \(q\) is onto and \(\overline{A} \cong \{q^{-1}(a) : a \in A \}\) (fibers of \(q\)).
+
+Note that if the quotient exists, it is always of the form \(q : A \to A/\!\sim\) where \(\sim\) is the equivalence relation induced by the fibers.
+
+\textbf{Proposition}. (First Isomorphism Theorem) Let \(f : A \to B\) be in a category of an algebraic structure \(\mathcal{C}\). Then \(A/\!\sim\, \cong \operatorname{Image}(f)\) in \(\mathcal{C}\).
+
+Note the way to relate the quotient of an object A in a concrete category to the quotient of the same \(A\) in the category of Set is via the UPQ (image the diagram) in the category of Set.
+
+This leads us naturally to a question: in a general concrete category, when is a quotient homomorphism onto? If the category has this property, then similar results as mentioned above follow.
+\end{document}
